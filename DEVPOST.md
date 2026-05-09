@@ -56,6 +56,43 @@ Seven scheduled jobs run in the background: pattern radar scans every 5 minutes,
 ## Built With
 devvit, typescript, hono, vite, vitest, redis, openai, gemini
 
+## Tool Overview
+
+SubStation is a moderation coordination app that brings structured incident response to Reddit. Here is how moderators use it:
+
+**Setup (one-time):** Install the app, open SubStation: Settings from the subreddit menu, optionally add an OpenAI or Gemini API key for AI features.
+
+**Daily use:**
+- When a mod spots a problematic post or comment, they click "SubStation: Claim post/comment" from the context menu. This marks the item as being handled, preventing other mods from duplicating work.
+- If a pattern emerges (brigade, spam wave), any mod can declare a P1/P2/P3 incident from the dashboard. All subsequent reports auto-tag to the active incident.
+- The dashboard (a custom post) shows five live panels: active incidents, claimed items, 24-hour coverage map, AI pattern radar results, and report volume vs. baseline.
+- Every 5 minutes, the pattern radar scans the mod queue and groups reports into clusters with coordination signals (account age, phrasing similarity, cross-post timing). It suggests AutoMod YAML rules.
+- Mods register their active hours. The coverage map highlights gap hours in red. If report volume spikes during a gap, SubStation sends a modmail alert.
+- Closing an incident generates a structured post-mortem (timeline, impact, contributing factors, recommended changes) that can be copied to the mod wiki.
+
+**Background automation:** 7 scheduled jobs handle pattern scanning, modlog sync, coverage computation, claim cleanup, volume baseline tracking, incident archival, and workload rollups. All run automatically with no mod intervention.
+
+**Without AI:** Everything works. Post-mortems use a deterministic template. Pattern radar skips. No crashes, no broken UI.
+
+## Project Impact
+
+1. **r/politics and large news subreddits (1M+ subscribers):** These communities face coordinated brigades during election cycles and breaking news events. SubStation's pattern radar would catch account-age clustering and cross-post timing that manual moderation misses. The claims system alone prevents the double-removal problem that wastes mod time during high-volume events.
+
+2. **r/gaming and fan community subreddits (500K-5M subscribers):** Game launches and controversy events trigger massive report spikes. The coverage map exposes timezone gaps where no mod is on shift, and the volume spike alerts ensure someone gets notified even at 3 AM. Post-mortems help these teams build institutional knowledge about recurring raid patterns.
+
+3. **r/AskScience, r/AskHistorians and quality-focused subreddits (1M+ subscribers):** These communities have strict content standards and rely heavily on coordinated mod response. The workload tracking and coverage analysis help distribute the burden fairly across the team, and incident history gives new mods context on past enforcement decisions.
+
+**Time savings estimate:** For a 10-person mod team handling 2-3 incidents per month, SubStation eliminates an estimated 30-45 minutes of coordination overhead per incident (duplicate removals, "who's handling this?" messages, manual post-mortem writing).
+
+## [For Ported Projects] Original Bot username
+
+N/A. SubStation is a new app.
+
+## [For Ported Projects] Port Completion
+
+N/A. SubStation is a new app built from scratch for the Reddit Mod Tools Hackathon.
+
 ## Try it out
-- **GitHub:** https://github.com/Anyesh/hackathon
+- **GitHub:** https://github.com/Anyesh/substation-sre
 - **Devvit App:** https://developers.reddit.com/apps/sub-station-sre
+- **Live Demo:** https://www.reddit.com/r/dreamery/
