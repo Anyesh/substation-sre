@@ -1,0 +1,133 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "sub-station-sre",
+  "server": {
+    "dir": "dist/server",
+    "entry": "index.cjs"
+  },
+  "post": {
+    "dir": "dist/client",
+    "entrypoints": {
+      "default": {
+        "entry": "index.html",
+        "height": "tall"
+      }
+    }
+  },
+  "menu": {
+    "items": [
+      {
+        "label": "SubStation: Claim post",
+        "description": "Claim this post so other mods know you're handling it.",
+        "location": "post",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/claim-post"
+      },
+      {
+        "label": "SubStation: Claim comment",
+        "description": "Claim this comment so other mods know you're handling it.",
+        "location": "comment",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/claim-comment"
+      },
+      {
+        "label": "SubStation: Tag to incident",
+        "description": "Link this post to an active incident wave.",
+        "location": "post",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/tag-to-incident"
+      },
+      {
+        "label": "SubStation: Tag comment to incident",
+        "description": "Link this comment to an active incident wave.",
+        "location": "comment",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/tag-comment-to-incident"
+      },
+      {
+        "label": "SubStation: Dashboard",
+        "description": "Open the SubStation coordination dashboard.",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/open-dashboard"
+      },
+      {
+        "label": "SubStation: Declare incident",
+        "description": "Declare a new incident wave for the mod team.",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/declare-incident"
+      },
+      {
+        "label": "SubStation: Settings",
+        "description": "Configure SubStation for this subreddit.",
+        "location": "subreddit",
+        "forUserType": "moderator",
+        "endpoint": "/internal/menu/settings"
+      }
+    ]
+  },
+  "forms": {
+    "declareIncident": "/internal/form/declare-incident",
+    "tagToIncident": "/internal/form/tag-to-incident",
+    "settings": "/internal/form/settings",
+    "setSchedule": "/internal/form/set-schedule"
+  },
+  "triggers": {
+    "onAppInstall": "/internal/triggers/on-app-install",
+    "onAppUpgrade": "/internal/triggers/on-app-upgrade",
+    "onPostReport": "/internal/triggers/on-post-report",
+    "onCommentReport": "/internal/triggers/on-comment-report",
+    "onPostDelete": "/internal/triggers/on-content-delete",
+    "onCommentDelete": "/internal/triggers/on-content-delete"
+  },
+  "scheduler": {
+    "tasks": {
+      "pattern-radar-scan": {
+        "endpoint": "/internal/scheduler/pattern-radar",
+        "cron": "*/5 * * * *"
+      },
+      "modlog-sync": {
+        "endpoint": "/internal/scheduler/modlog-sync",
+        "cron": "0 * * * *"
+      },
+      "coverage-compute": {
+        "endpoint": "/internal/scheduler/coverage-compute",
+        "cron": "30 * * * *"
+      },
+      "claim-sweep": {
+        "endpoint": "/internal/scheduler/claim-sweep",
+        "cron": "*/15 * * * *"
+      },
+      "queue-volume-baseline": {
+        "endpoint": "/internal/scheduler/volume-baseline",
+        "cron": "0 0 * * *"
+      },
+      "incident-history-prune": {
+        "endpoint": "/internal/scheduler/incident-prune",
+        "cron": "0 2 * * 0"
+      },
+      "workload-rollup": {
+        "endpoint": "/internal/scheduler/workload-rollup",
+        "cron": "0 3 * * 1"
+      }
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "permissions": {
+    "reddit": true,
+    "http": {
+      "enable": true,
+      "domains": [
+        "api.openai.com",
+        "generativelanguage.googleapis.com"
+      ]
+    }
+  },
+  "dev": {
+    "subreddit": "sub_station_sre_dev"
+  }
+}

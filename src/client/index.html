@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SubStation Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">SubStation</span>
+        <span class="brand-tag">incident response for mod teams</span>
+      </div>
+      <div class="topbar-actions">
+        <button id="declareBtn" class="btn btn-primary">Declare incident</button>
+        <button id="refreshBtn" class="btn">Refresh</button>
+        <button id="radarBtn" class="btn">Run radar</button>
+        <button id="seedBtn" class="btn btn-ghost" title="Populate demo data">Seed demo</button>
+      </div>
+    </header>
+
+    <dialog id="declareDialog" class="modal">
+      <form id="declareForm" method="dialog" class="modal-form">
+        <h3>Declare incident</h3>
+        <label>
+          Title
+          <input id="declTitle" name="title" type="text" required maxlength="120" />
+        </label>
+        <label>
+          Severity
+          <select id="declSeverity" name="severity" required>
+            <option value="P1">P1 — Critical (active brigade or unsafe content)</option>
+            <option value="P2" selected>P2 — Major (rule violations spreading)</option>
+            <option value="P3">P3 — Minor (cleanup needed)</option>
+          </select>
+        </label>
+        <label>
+          Description
+          <textarea id="declDescription" name="description" rows="3"></textarea>
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="declCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="declSubmit">Declare</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="postmortemDialog" class="modal">
+      <div class="modal-form">
+        <h3>Post-mortem</h3>
+        <pre id="postmortemBody" class="postmortem"></pre>
+        <div class="modal-actions">
+          <button type="button" class="btn" id="postmortemCopy">Copy markdown</button>
+          <button type="button" class="btn btn-primary" id="postmortemClose">Close</button>
+        </div>
+      </div>
+    </dialog>
+
+    <div id="banner" class="banner hidden" role="status"></div>
+
+    <main class="grid">
+      <section class="panel" aria-labelledby="incidents-heading">
+        <header class="panel-header">
+          <h2 id="incidents-heading">Active incidents</h2>
+          <span id="incidentsCount" class="count">0</span>
+        </header>
+        <div id="incidents" class="panel-body"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="claims-heading">
+        <header class="panel-header">
+          <h2 id="claims-heading">Active claims</h2>
+          <span id="claimsCount" class="count">0</span>
+        </header>
+        <div id="claims" class="panel-body"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="coverage-heading">
+        <header class="panel-header">
+          <h2 id="coverage-heading">Coverage map (UTC)</h2>
+          <span id="coverageMeta" class="count"></span>
+        </header>
+        <div id="coverage" class="panel-body"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="radar-heading">
+        <header class="panel-header">
+          <h2 id="radar-heading">Pattern radar</h2>
+          <span id="radarMeta" class="count"></span>
+        </header>
+        <div id="radar" class="panel-body"></div>
+      </section>
+
+      <section class="panel panel-wide" aria-labelledby="stats-heading">
+        <header class="panel-header">
+          <h2 id="stats-heading">Queue volume</h2>
+          <span id="statsMeta" class="count"></span>
+        </header>
+        <div id="stats" class="panel-body"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+export const CLAIM_TTL_SECONDS = 900;
+export const CLAIM_STALE_THRESHOLD_MS = 600_000;
+export const PATTERN_RADAR_TTL_SECONDS = 600;
+export const COVERAGE_TTL_SECONDS = 3600;
+export const WORKLOAD_TTL_SECONDS = 2_592_000;
+export const INCIDENT_HISTORY_MAX_AGE_MS = 7_776_000_000;
+export const RADAR_LOCK_TTL_SECONDS = 240;
+export const RADAR_RATE_LIMIT_MS = 60_000;
+export const QUEUE_SURGE_MULTIPLIER = 3;
+export const MAX_RADAR_ITEMS = 50;
+export const APP_VERSION = '1.0.0';
+export const VOLUME_SPIKE_ALERT_TTL_SECONDS = 21_600;
+
+export const claimKey = (contentId: string): string => `claims:${contentId}`;
+export const claimsActiveKey = (): string => `claims:active`;
+export const incidentKey = (id: string): string => `incident:${id}`;
+export const incidentsActiveKey = (): string => `incidents:active`;
+export const incidentsHistoryKey = (): string => `incidents:history`;
+export const incidentItemsKey = (incidentId: string): string => `incident_items:${incidentId}`;
+export const patternRadarKey = (): string => `pattern_radar:latest`;
+export const radarLockKey = (): string => `lock:pattern-radar`;
+export const modScheduleKey = (username: string): string => `mod_schedule:${username}`;
+export const coverageGapsKey = (): string => `coverage:gaps`;
+export const workloadKey = (username: string, date: string): string => `workload:${username}:${date}`;
+export const workloadLeaderboardKey = (date: string): string => `workload:leaderboard:${date}`;
+export const configKey = (): string => `config:app`;
+export const volumeBaselineKey = (): string => `stats:volume_baseline`;
+export const dailyVolumeKey = (date: string): string => `stats:volume:${date}`;
+export const volumeSpikeAlertKey = (date: string): string =>
+  `stats:volume_spike_alert:${date}`;
+export const dashboardPostKey = (): string => `dashboard:postId`;
+export const modlogCursorKey = (): string => `modlog:lastSyncedAt`;
